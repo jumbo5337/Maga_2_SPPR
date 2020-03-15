@@ -22,6 +22,28 @@ class NeuralNetwork(torch.nn.Module):
         x = self.fc2(x)
         return x
 
+class NewNeuralNetwork(torch.nn.Module):
+    def __init__(self, n_hidden_neurons):
+        super(NewNeuralNetwork, self).__init__()
+        # Создание входного слоя
+        self.fc1 = torch.nn.Linear(1, n_hidden_neurons)
+        # Функция активации
+        self.act1 = torch.nn.Sigmoid()
+        # Создание выходного слоя
+        self.fc2 = torch.nn.Linear(n_hidden_neurons, n_hidden_neurons)
+        self.fc3 = torch.nn.Linear(n_hidden_neurons, n_hidden_neurons)
+        self.fc4 = torch.nn.Linear(n_hidden_neurons, n_hidden_neurons)
+        self.fc5 = torch.nn.Linear(n_hidden_neurons, 1)
+
+    def forward(self, x):
+        x = self.fc1(x)
+        x = self.act1(x)
+        x = self.fc2(x)
+        x = self.fc3(x)
+        x = self.fc4(x)
+        x = self.fc5(x)
+        return x
+
 
 def predict(net, x, y, plot_name):
     y_pred = net.forward(x)
@@ -117,22 +139,23 @@ def influence_lr(directory, neurons_amount, lr, x_train, y_train, x_valid, y_val
 
 
 def find_optimal_params(x_train, y_train, x_valid, y_valid, epochs):
-    MAE_hist = []
+    current_MAE = 1
     min_MAE = 1
     min_lr = 0
     min_n = 0
     found = False
     for lri in range (10, 100, 1):
         lrb = lri / 1000
-        for neurons in range (10, 50, 1):
-            net = NeuralNetwork(neurons)
+        for neurons in range (30, 50, 1):
+            net = NewNeuralNetwork(neurons)
             optimizer = torch.optim.Adam(net.parameters(), lrb)
             for epoch_index in range(epochs):
                 optimizer.zero_grad()
                 y_pred = net.forward(x_train)
                 loss(y_pred, y_train).backward()
                 optimizer.step()
-                print('epoch-count: ' + str(epoch_index) + ' neurons ammount ' + str(neurons) + ' lr ' + str(lrb))
+                print('epoch-count: ' + str(epoch_index) + ' neurons ammount '
+                      + str(neurons) + ' lr ' + str(lrb) + ' current mae ' + str(current_MAE) )
             current_MAE = metric(net.forward(x_valid), y_valid).item()
             if (current_MAE < 0.03):
                 min_MAE = current_MAE

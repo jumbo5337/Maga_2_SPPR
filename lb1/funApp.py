@@ -54,6 +54,6 @@ plt.close()
 
 # nn.influence_of_neurons(direct, n_hidden_neurons, lr, x_train, y_train, x_validation, y_validation, epoch_count)
 # nn.influence_lr(direct, n_hidden_neurons, lr, x_train, y_train, x_validation, y_validation, epoch_count)
-# nn.train_net_work(direct, n_hidden_neurons, lr, x_train, y_train, x_validation, y_validation, epoch_count)
+nn.train_net_work(direct, n_hidden_neurons, lr, x_train, y_train, x_validation, y_validation, epoch_count)
 nn.find_optimal_params(x_train,y_train,x_validation,y_validation,epoch_count)
 
