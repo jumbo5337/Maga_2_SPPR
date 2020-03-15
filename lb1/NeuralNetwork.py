@@ -1,10 +1,7 @@
 import matplotlib.pyplot as plt
 import torch
-import numpy
 from matplotlib import rcParams
-import os
 
-my_path = os.path.abspath(__file__)
 ## Параметры размеров окна matplotlib
 rcParams['figure.figsize'] = (10.0, 5.0)
 
@@ -36,10 +33,6 @@ def predict(net, x, y, plot_name):
     plt.ylabel('$y$')
     plt.savefig(plot_name + '.png', bbox_inches='tight')
     plt.close()
-
-
-def predict2(net, x, y, ):
-    y_pred = net.forward(x)
 
 
 def loss(pred, target):

@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import torch
 from matplotlib import rcParams
-import os
-import lr1.NeuralNetwork as nn
+
+import lb1.NeuralNetwork as nn
 
 ## Параметры размеров окна matplotlib
 rcParams['figure.figsize'] = (10.0, 5.0)
